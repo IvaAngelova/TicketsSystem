@@ -1,0 +1,101 @@
+﻿@page
+@model TicketSystem.Pages.TicketStatuses.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Status Name or Ticket Title:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.StatusNameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.TicketStatus[0].StatusName)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketStatus[0].Ticket)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.StatusDateSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.TicketStatus[0].StatusDate)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.EmployeeSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.TicketStatus[0].Employee)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.ModifDate17118162Sort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.TicketStatus[0].ModifDate17118162)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TicketStatus)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ticket.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifDate17118162)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.TicketStatusID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.TicketStatusID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.TicketStatusID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.TicketStatus.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.TicketStatus.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.TicketStatus.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.TicketStatus.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

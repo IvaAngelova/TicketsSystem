@@ -1,0 +1,133 @@
+﻿@page
+@model TicketSystem.Pages.Tickets.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Title, Creator Ticket or Ticket Priority:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-page="./Index">Back to full List</a> &emsp;&emsp;&emsp;&emsp;
+            <a asp-page="./TicketsReport">Create Report</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].Title)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TicketPrioritySort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Ticket[0].CreatorTicket)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TicketPrioritySort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Ticket[0].AcceptedATicket)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].TicketCategory)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.OpenDateSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Ticket[0].OpenDate)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TicketPrioritySort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Ticket[0].TicketPriority)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].Photo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].Description)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TicketPrioritySort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Ticket[0].ModifDate17118162)
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Ticket)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatorTicket.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcceptedATicket.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketCategory.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketPriority.PriorityType)
+                </td>
+                <td>
+                    @if (item.Photo != null)
+                    {
+                        <img src="data:image;base64,
+                             @System.Convert.ToBase64String(item.Photo)" width="100" height="100" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifDate17118162)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.TicketID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.TicketID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.TicketID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.Ticket.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Ticket.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Ticket.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Ticket.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

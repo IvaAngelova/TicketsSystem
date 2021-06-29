@@ -1,0 +1,65 @@
+﻿@page
+@model TicketSystem.Pages.Tickets.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Ticket </h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ticket.Title" class="control-label"></label>
+                <input asp-for="Ticket.Title" class="form-control" />
+                <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.CreatorTicket.Email" class="control-label" hidden="hidden"></label>
+                <select asp-for="Ticket.CreatorID" class="form-control" asp-items="ViewBag.CreatorID" hidden="hidden">
+                    <option value="">-- Select Email --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.TicketCategory.CategoryName" class="control-label"></label>
+                <select asp-for="Ticket.TicketCategoryID" class="form-control" asp-items="ViewBag.TicketCategoryID">
+                    <option value="">-- Select Category --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.OpenDate" class="control-label"></label>
+                <input asp-for="Ticket.OpenDate" class="form-control" />
+                <span asp-validation-for="Ticket.OpenDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.TicketPriority.PriorityType" class="control-label"></label>
+                <select asp-for="Ticket.TicketPriorityID" class="form-control" asp-items="ViewBag.TicketPriorityID">
+                    <option value="">-- Select Priority --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UploadFiles.FormFile"></label>
+                <input asp-for="UploadFiles.FormFile" type="file">
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.Description" class="control-label"></label>
+                <input asp-for="Ticket.Description" class="form-control" />
+                <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

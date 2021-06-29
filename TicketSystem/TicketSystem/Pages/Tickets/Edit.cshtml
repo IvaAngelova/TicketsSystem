@@ -1,0 +1,75 @@
+﻿@page
+@model TicketSystem.Pages.Tickets.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Ticket</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Ticket.TicketID" />
+            <div class="form-group">
+                <label asp-for="Ticket.Title" class="control-label"></label>
+                <input asp-for="Ticket.Title" class="form-control" />
+                <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.CreatorID" class="control-label"></label>
+                <select asp-for="Ticket.CreatorID" class="form-control" asp-items="ViewBag.CreatorID"></select>
+                <span asp-validation-for="Ticket.CreatorID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.AcceptedATicketID" class="control-label"></label>
+                <select asp-for="Ticket.AcceptedATicketID" class="form-control" asp-items="ViewBag.АcceptedАТicketID"></select>
+                <span asp-validation-for="Ticket.AcceptedATicketID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.TicketCategoryID" class="control-label"></label>
+                <select asp-for="Ticket.TicketCategoryID" class="form-control" asp-items="ViewBag.TicketCategoryID"></select>
+                <span asp-validation-for="Ticket.TicketCategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.OpenDate" class="control-label"></label>
+                <input asp-for="Ticket.OpenDate" class="form-control" />
+                <span asp-validation-for="Ticket.OpenDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.TicketPriorityID" class="control-label"></label>
+                <select asp-for="Ticket.TicketPriorityID" class="form-control" asp-items="ViewBag.TicketPriorityID"></select>
+                <span asp-validation-for="Ticket.TicketPriorityID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.Photo" class="control-label"></label>
+                <input asp-for="Ticket.Photo" class="form-control" />
+                <span asp-validation-for="Ticket.Photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.Description" class="control-label"></label>
+                <input asp-for="Ticket.Description" class="form-control" />
+                <span asp-validation-for="Ticket.Description" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Ticket.Comment" class="control-label"></label>
+                <input asp-for="Ticket.Comment" class="form-control" />
+                <span asp-validation-for="Ticket.Comment" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

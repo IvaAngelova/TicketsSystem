@@ -1,0 +1,79 @@
+﻿@page
+@model TicketSystem.Pages.Tickets.TicketsReportModel
+
+@{
+    ViewData["Title"] = "TicketsReport";
+}
+
+<h1>TicketsReport</h1>
+
+<p class="text-danger">@Model.ErrorMessage</p>
+
+<form method="post">
+    <div class="form-actions no-color">
+        <p>
+            Report by Date:
+            <input type="date" name="Date" value="@Model.ReportyByDate"/>
+            <button type="submit" value="Export">Export Excel</button>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketsReports[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketsReports[0].Creator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketsReports[0].Accepted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketsReports[0].OpenDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketsReports[0].TicketPriority)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TicketsReports)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Accepted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketPriority)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.TicketsReports.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.TicketsReports.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.TicketsReports.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.TicketsReports.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+
